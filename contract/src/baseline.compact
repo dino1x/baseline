@@ -1,0 +1,199 @@
+// SPDX-License-Identifier: Apache-2.0
+// Baseline: Private scholarship and bursary eligibility verification on Midnight.
+// Meet the baseline, reveal nothing more.
+
+pragma language_version >= 0.23;
+
+import CompactStandardLibrary;
+
+export enum FundingStatus { accepting, finalized }
+export enum EntryStatus { pending, awarded, collected }
+
+export struct AcademicRecord {
+  gpa: Uint<16>;
+  programId: Uint<32>;
+  enrolled: Boolean;
+  financialNeed: Uint<16>;
+  completedCredits: Uint<16>;
+  validUntil: Uint<32>;
+}
+
+export struct AwardCriteria {
+  minGpa: Uint<16>;
+  programId: Uint<32>;
+  requireEnrolled: Boolean;
+  maxFinancialNeed: Uint<16>;
+  minCredits: Uint<16>;
+  referenceDate: Uint<32>;
+}
+
+struct RecordCommitmentInput {
+  domain: Bytes<32>;
+  record: AcademicRecord;
+  holder: Bytes<32>;
+  salt: Bytes<32>;
+}
+
+// ---------------------------------------------------------------------------
+// Ledger State
+// ---------------------------------------------------------------------------
+
+export sealed ledger registrar: Bytes<32>;
+export ledger records: HistoricMerkleTree<16, Bytes<32>>;
+export ledger recordCount: Counter;
+export ledger fundings: Map<Bytes<32>, AwardCriteria>;
+export ledger entries: Map<Bytes<32>, Map<Bytes<32>, EntryStatus>>;
+export ledger entryCount: Map<Bytes<32>, Counter>;
+export ledger awardCount: Map<Bytes<32>, Counter>;
+export ledger seedLocks: Map<Bytes<32>, Bytes<32>>;
+export ledger revealedSeeds: Map<Bytes<32>, Bytes<32>>;
+
+// ---------------------------------------------------------------------------
+// Witnesses (Private Inputs)
+// ---------------------------------------------------------------------------
+
+witness privateKey(): Bytes<32>;
+witness heldRecord(): AcademicRecord;
+witness recordSalt(): Bytes<32>;
+witness recordPath(commitment: Bytes<32>): MerkleTreePath<16, Bytes<32>>;
+
+// ---------------------------------------------------------------------------
+// Pure Circuits
+// ---------------------------------------------------------------------------
+
+export pure circuit registrarKey(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "baseline:registrar:v1"), sk]);
+}
+
+export pure circuit committeeKey(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "baseline:committee:v1"), sk]);
+}
+
+export pure circuit applicantKey(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "baseline:applicant:v1"), sk]);
+}
+
+export pure circuit receiptFor(sk: Bytes<32>, fundingId: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<3, Bytes<32>>>([pad(32, "baseline:receipt:v1"), fundingId, sk]);
+}
+
+export pure circuit drawSeedFor(sk: Bytes<32>, fundingId: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<3, Bytes<32>>>([pad(32, "baseline:seed:v1"), fundingId, sk]);
+}
+
+export pure circuit seedLockOf(seed: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "baseline:seed-lock:v1"), seed]);
+}
+
+export pure circuit drawTicketFor(seed: Bytes<32>, receipt: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<3, Bytes<32>>>([pad(32, "baseline:ticket:v1"), seed, receipt]);
+}
+
+export pure circuit recordCommitment(r: AcademicRecord, holder: Bytes<32>, salt: Bytes<32>): Bytes<32> {
+  return persistentHash<RecordCommitmentInput>(RecordCommitmentInput {
+    domain: pad(32, "baseline:credential:v1"),
+    record: r,
+    holder: holder,
+    salt: salt
+  });
+}
+
+export pure circuit satisfiesCriteria(record: AcademicRecord, criteria: AwardCriteria): Boolean {
+  const gpaOk = record.gpa >= criteria.minGpa;
+  const programOk = criteria.programId == 0 || record.programId == criteria.programId;
+  const enrolledOk = !criteria.requireEnrolled || record.enrolled;
+  const financialNeedOk = criteria.maxFinancialNeed == 0 || record.financialNeed <= criteria.maxFinancialNeed;
+  const creditsOk = record.completedCredits >= criteria.minCredits;
+  const validOk = record.validUntil >= criteria.referenceDate;
+  return gpaOk && programOk && enrolledOk && financialNeedOk && creditsOk && validOk;
+}
+
+// ---------------------------------------------------------------------------
+// State Transition Circuits
+// ---------------------------------------------------------------------------
+
+constructor() {
+  registrar = disclose(registrarKey(privateKey()));
+}
+
+export circuit addRecord(commitment: Bytes<32>): [] {
+  assert(disclose(registrarKey(privateKey()) == registrar), "Only registrar can add records");
+  records.insert(disclose(commitment));
+  recordCount.increment(1);
+}
+
+export circuit createFunding(fundingId: Bytes<32>, criteria: AwardCriteria): [] {
+  const id = disclose(fundingId);
+  const c = disclose(criteria);
+  assert(!fundings.member(id), "Funding exists");
+  fundings.insert(id, c);
+  entries.insert(id, default<Map<Bytes<32>, EntryStatus>>);
+  entryCount.insert(id, default<Counter>);
+  awardCount.insert(id, default<Counter>);
+}
+
+export circuit commitSeedLock(fundingId: Bytes<32>, lock: Bytes<32>): [] {
+  const id = disclose(fundingId);
+  assert(fundings.member(id), "Unknown funding");
+  seedLocks.insert(id, disclose(lock));
+}
+
+export circuit submitEntry(fundingId: Bytes<32>): Bytes<32> {
+  const id = disclose(fundingId);
+  assert(fundings.member(id), "Unknown funding");
+  const criteria = fundings.lookup(id);
+
+  const sk = privateKey();
+  const rec = heldRecord();
+  const commitment = recordCommitment(rec, applicantKey(sk), recordSalt());
+  const path = recordPath(commitment);
+  assert(disclose(path.leaf == commitment), "Merkle path does not match commitment");
+  assert(records.checkRoot(disclose(merkleTreePathRoot<16, Bytes<32>>(path))),
+         "Record was not issued by registrar");
+  assert(disclose(satisfiesCriteria(rec, criteria)), "Record does not meet award criteria");
+
+  const receipt = disclose(receiptFor(sk, id));
+  assert(!entries.lookup(id).member(receipt), "Already entered");
+  entries.lookup(id).insert(receipt, EntryStatus.pending);
+  entryCount.lookup(id).increment(1);
+  return receipt;
+}
+
+export circuit closeFunding(fundingId: Bytes<32>, seed: Bytes<32>): [] {
+  const id = disclose(fundingId);
+  assert(fundings.member(id), "Unknown funding");
+  const s = disclose(seed);
+  if (seedLocks.member(id)) {
+    assert(seedLockOf(s) == seedLocks.lookup(id), "Revealed seed does not match seed lock commitment");
+  }
+  revealedSeeds.insert(id, s);
+}
+
+export circuit generateDrawTicket(fundingId: Bytes<32>): Bytes<32> {
+  const id = disclose(fundingId);
+  assert(fundings.member(id), "Unknown funding");
+  assert(revealedSeeds.member(id), "Funding seed not yet revealed");
+  const seed = revealedSeeds.lookup(id);
+  const receipt = receiptFor(privateKey(), id);
+  return disclose(drawTicketFor(seed, receipt));
+}
+
+export circuit awardEntry(fundingId: Bytes<32>, receipt: Bytes<32>): [] {
+  const id = disclose(fundingId);
+  const r = disclose(receipt);
+  assert(fundings.member(id), "Unknown funding");
+  assert(entries.lookup(id).member(r), "Unknown receipt");
+  assert(entries.lookup(id).lookup(r) == EntryStatus.pending, "Entry not pending");
+  entries.lookup(id).insert(r, EntryStatus.awarded);
+  awardCount.lookup(id).increment(1);
+}
+
+export circuit collectAward(fundingId: Bytes<32>): Bytes<32> {
+  const id = disclose(fundingId);
+  assert(fundings.member(id), "Unknown funding");
+  const receipt = disclose(receiptFor(privateKey(), id));
+  assert(entries.lookup(id).member(receipt), "No entry for holder");
+  assert(entries.lookup(id).lookup(receipt) == EntryStatus.awarded, "Not awarded");
+  entries.lookup(id).insert(receipt, EntryStatus.collected);
+  return receipt;
+}

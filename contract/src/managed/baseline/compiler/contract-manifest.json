@@ -1,0 +1,76 @@
+{
+  "manifest-version": "1",
+  "compiler-version": "0.35.0",
+  "compiler-commit": "debb05f9414b9d1e176741c2be289bb32233f0fc",
+  "language-version": "0.27.0",
+  "runtime-version": "0.20.0",
+  "compiler": {
+    "type": "directory",
+    "contract-info.json": {
+      "type": "file",
+      "size": 18240,
+      "hash": "851edd87d2fe4229dfe9718e71aa4c555ad069770957ec32367ac2cabc40ef7b"
+    }
+  },
+  "contract": {
+    "type": "directory",
+    "index.d.ts": {
+      "type": "file",
+      "size": 10640,
+      "hash": "e21985f486dd20bee1bc1a8adbf45009158410b8dd159e06aafc83d95ab60b95"
+    },
+    "index.js": {
+      "type": "file",
+      "size": 213151,
+      "hash": "1acfb1d100db737e3c1ab848ccafdf92d08a788e2daf73d1fc10613efd9ad7d6"
+    },
+    "index.js.map": {
+      "type": "file",
+      "size": 7819,
+      "hash": "c9aa7cead0204acdd6929a9a9c65213abe92489134ab507bfb803f92569dbfa7"
+    }
+  },
+  "zkir": {
+    "type": "directory",
+    "addRecord.zkir": {
+      "type": "file",
+      "size": 5616,
+      "hash": "4f5541a546ea909c6571829860341a2cfaa974408ff64910dcf02d81d9ff1f61"
+    },
+    "awardEntry.zkir": {
+      "type": "file",
+      "size": 6300,
+      "hash": "5b3fdb3dba36507f6d79d897073a99d1672540ce900293b00e045a0ff4a066d2"
+    },
+    "closeFunding.zkir": {
+      "type": "file",
+      "size": 6211,
+      "hash": "f660f3022e8350d51b2ced19bc805da07a621f2f4392c92c959adfe17c423cbc"
+    },
+    "collectAward.zkir": {
+      "type": "file",
+      "size": 6124,
+      "hash": "f13c14e0b20ea021e28ef6c7b862f6fcebf78a3e4cf45506dfe8ca97c0071761"
+    },
+    "commitSeedLock.zkir": {
+      "type": "file",
+      "size": 2959,
+      "hash": "18092274ce6d77ab156c446b44c06fb8eae5463eda428e9b5132f3bc1f88c22e"
+    },
+    "createFunding.zkir": {
+      "type": "file",
+      "size": 6760,
+      "hash": "dcb2e7a16e95fd487e61033edec0a62db4ff5911c0fcaa6ef5295030cadafec5"
+    },
+    "generateDrawTicket.zkir": {
+      "type": "file",
+      "size": 4682,
+      "hash": "552916cf30be5588123a1ec08188b7638d4e1a907cad33e911ddc54947a996ea"
+    },
+    "submitEntry.zkir": {
+      "type": "file",
+      "size": 17135,
+      "hash": "a19a63522f87e25f7794b076350a5e9c0ac74d349b1a2263e7e63560f9f7e772"
+    }
+  }
+}
