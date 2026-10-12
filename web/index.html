@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baseline Chancery — University Registrar Bursar &amp; Academic Dossier Desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body class="archival-desk-body">
+
+  <!-- Top Horizontal Brass-Ruled Academic Masthead -->
+  <nav class="chancery-masthead" aria-label="University Chancery Masthead">
+    <div class="chancery-upper-tier">
+      <div class="university-insignia-block">
+        <svg class="oxford-seal-svg" viewBox="0 0 72 72" role="img" aria-label="Chancery Academic Seal">
+          <circle cx="36" cy="36" r="34" fill="#0d2019" stroke="#c89d54" stroke-width="1.75"/>
+          <circle cx="36" cy="36" r="29" fill="none" stroke="#c89d54" stroke-width="0.75" stroke-dasharray="2.5 2"/>
+          <polygon points="36,9 41,24 57,24 44,33 49,49 36,39 23,49 28,33 15,24 31,24" fill="none" stroke="#c89d54" stroke-width="0.9" opacity="0.45"/>
+          <path d="M22 25 H50 V43 C50 51 36 56 36 56 C36 56 22 51 22 43 Z" fill="#122b22" stroke="#e3c383" stroke-width="1.4"/>
+          <path d="M26 30 H35 V41 H26 Z M37 30 H46 V41 H37 Z" fill="#f5f0e6" stroke="#122b22" stroke-width="0.8"/>
+          <line x1="28" y1="33" x2="33" y2="33" stroke="#122b22" stroke-width="1"/>
+          <line x1="28" y1="36" x2="33" y2="36" stroke="#122b22" stroke-width="1"/>
+          <line x1="39" y1="33" x2="44" y2="33" stroke="#122b22" stroke-width="1"/>
+          <line x1="39" y1="36" x2="44" y2="36" stroke="#122b22" stroke-width="1"/>
+          <circle cx="36" cy="48" r="2.5" fill="#b45309"/>
+        </svg>
+        <div class="chancery-titles">
+          <div class="chancery-super">Collegiate Bursary &amp; Transcript Clearinghouse</div>
+          <h1 class="chancery-heading">BASELINE REGISTRAR CHANCERY</h1>
+          <p class="chancery-subline">Zero-Knowledge Academic Merit Attestation &amp; Unlinkable Bursary Allocation on Midnight</p>
+        </div>
+      </div>
+
+      <!-- Registrar Ledger Counters -->
+      <div class="registrar-ledger-counters">
+        <div class="bursar-counter-cell">
+          <span class="counter-caption">Historic Merkle Root</span>
+          <span class="counter-cipher" id="mastheadRootDigest">0x0000...</span>
+        </div>
+        <div class="bursar-counter-cell">
+          <span class="counter-caption">Sealed Dossiers</span>
+          <span class="counter-cipher" id="mastheadLeafCount">0</span>
+        </div>
+        <div class="bursar-counter-cell">
+          <span class="counter-caption">Bursary Ordinances</span>
+          <span class="counter-cipher" id="mastheadOrdinanceCount">2</span>
+        </div>
+        <div class="bursar-counter-cell">
+          <span class="counter-caption">Nullifier Receipts</span>
+          <span class="counter-cipher" id="mastheadReceiptCount">0</span>
+        </div>
+        <div class="bursar-counter-cell">
+          <span class="counter-caption">Public Ledger Audit</span>
+          <span class="counter-cipher wax-seal-ok" id="mastheadLeakVerdict">0 BYTES LEAKED</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chancery-brass-divider"></div>
+
+    <!-- Scenario Switcher Tabs & Desk Acoustics Control -->
+    <div class="chancery-lower-tier">
+      <div class="dossier-scenario-tabs" role="tablist" aria-label="Candidate Dossier Presets">
+        <span class="scenario-tab-prompt">Candidate Dossier Folio:</span>
+        <button type="button" class="dossier-tab-btn is-selected" id="tabMeritScholar" role="tab" aria-selected="true">
+          I. Merit Scholar (3.92 GPA / $3,200 Need)
+        </button>
+        <button type="button" class="dossier-tab-btn" id="tabNeedGrantee" role="tab" aria-selected="false">
+          II. Need Grantee (3.45 GPA / $8,500 Need)
+        </button>
+        <button type="button" class="dossier-tab-btn" id="tabUnderThreshold" role="tab" aria-selected="false">
+          III. Under-Threshold Rejection (2.80 GPA)
+        </button>
+      </div>
+
+      <div class="chancery-meta-controls">
+        <span class="compact-spec-tag">Compact 0.35.0 / Depth-16 Tree</span>
+        <button type="button" class="acoustics-switch-btn is-active" id="btnAcousticsToggle">
+          Desk Acoustics: ON
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Three-Column Horizontal Academic Dossier Folio -->
+  <div class="dossier-folio-triptych">
+
+    <!-- COLUMN I: Registrar Credential Issuance & Historic Merkle Tree Path -->
+    <article class="folio-leaf" aria-labelledby="colOneHeading">
+      <div class="folio-leaf-banner">
+        <div class="folio-numeral-stamp">FOLIO I</div>
+        <div class="folio-heading-group">
+          <h2 class="folio-title" id="colOneHeading">Registrar Credential Issuance</h2>
+          <p class="folio-subtitle">University Clearinghouse Transcript Sealing &amp; Historic Merkle Path</p>
+        </div>
+        <span class="circuit-call-seal">addRecord</span>
+      </div>
+
+      <div class="ledger-entry-grid">
+        <label class="ledger-field">
+          <span class="ledger-field-label">Certified Cumulative GPA</span>
+          <input type="number" step="0.01" min="0" max="4.0" class="ledger-input" id="fieldGpa" value="3.92">
+        </label>
+        <label class="ledger-field">
+          <span class="ledger-field-label">Academic Program Code</span>
+          <input type="number" class="ledger-input" id="fieldProgramCode" value="101">
+        </label>
+        <label class="ledger-field">
+          <span class="ledger-field-label">Assessed Financial Need ($)</span>
+          <input type="number" class="ledger-input" id="fieldAssessedNeed" value="3200">
+        </label>
+        <label class="ledger-field">
+          <span class="ledger-field-label">Completed Credit Hours</span>
+          <input type="number" class="ledger-input" id="fieldCompletedCredits" value="74">
+        </label>
+        <label class="ledger-field">
+          <span class="ledger-field-label">Matriculation Standing</span>
+          <select class="ledger-input" id="fieldEnrollmentStanding">
+            <option value="true" selected>Matriculated in Good Standing (True)</option>
+            <option value="false">Leave of Absence / Withdrawn (False)</option>
+          </select>
+        </label>
+        <label class="ledger-field">
+          <span class="ledger-field-label">Attestation Expiry (YYYYMMDD)</span>
+          <input type="number" class="ledger-input" id="fieldValidUntil" value="20271231">
+        </label>
+      </div>
+
+      <button type="button" class="wax-stamp-btn" id="btnInscribeDossier">
+        Seal &amp; Inscribe Dossier into Registrar Tree
+      </button>
+
+      <!-- Official Sealed Transcript Certificate -->
+      <div class="sealed-transcript-parchment" id="transcriptCertificateBox">
+        <div class="parchment-top-bar">
+          <span class="parchment-rubric">Sworn Academic Dossier Extract</span>
+          <button type="button" class="shield-lens-toggle" id="btnTogglePrivacyLens">
+            Lens: PUBLIC OBSERVER (SHIELDED)
+          </button>
+        </div>
+
+        <div class="parchment-datum-grid">
+          <div class="parchment-datum">
+            <span class="datum-caption">Standing</span>
+            <span class="datum-value" id="certStandingText">MATRICULATED</span>
+          </div>
+          <div class="parchment-datum">
+            <span class="datum-caption">Department Code</span>
+            <span class="datum-value" id="certDepartmentText">Faculty 101</span>
+          </div>
+          <div class="parchment-datum">
+            <span class="datum-caption">Cumulative GPA</span>
+            <span class="datum-value" id="certGpaValue"><span class="redacted-wax-tag">WITNESS ONLY</span></span>
+          </div>
+          <div class="parchment-datum">
+            <span class="datum-caption">Assessed Need</span>
+            <span class="datum-value" id="certNeedValue"><span class="redacted-wax-tag">WITNESS ONLY</span></span>
+          </div>
+        </div>
+
+        <div class="parchment-cipher-stack">
+          <div class="cipher-row">
+            <span class="datum-caption">Salted Credential Commitment (Leaf)</span>
+            <code class="cipher-scroll" id="outLeafCommitment">0x...</code>
+          </div>
+          <div class="cipher-row">
+            <span class="datum-caption">Registrar HistoricMerkleTree&lt;16&gt; Root</span>
+            <code class="cipher-scroll" id="outTreeRoot">0x...</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Historic Merkle Tree Path Diagram -->
+      <div class="merkle-lineage-box">
+        <div class="lineage-header">
+          <span class="datum-caption">HistoricMerkleTree&lt;16, Bytes&lt;32&gt;&gt; Inclusion Witness Path</span>
+          <span class="lineage-depth-note" id="leafIndexIndicator">Leaf #0</span>
+        </div>
+        <div class="merkle-chain-track" id="merkleTrackBoard">
+          <div class="merkle-node-cell" id="stepLeafNode">
+            <span class="node-tier-tag">Tier 0 (Leaf)</span>
+            <span class="node-hash-snippet" id="snippetLeafHash">Commitment</span>
+          </div>
+          <span class="merkle-link-glyph" aria-hidden="true">&raquo;</span>
+          <div class="merkle-node-cell" id="stepBranchOne">
+            <span class="node-tier-tag">Sibling I</span>
+            <span class="node-hash-snippet" id="snippetBranchOne">Interior</span>
+          </div>
+          <span class="merkle-link-glyph" aria-hidden="true">&raquo;</span>
+          <div class="merkle-node-cell" id="stepBranchTwo">
+            <span class="node-tier-tag">Sibling XV</span>
+            <span class="node-hash-snippet" id="snippetBranchTwo">Interior</span>
+          </div>
+          <span class="merkle-link-glyph" aria-hidden="true">&raquo;</span>
+          <div class="merkle-node-cell" id="stepRootNode">
+            <span class="node-tier-tag">Historic Root</span>
+            <span class="node-hash-snippet" id="snippetRootHash">Anchor</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- COLUMN II: Scholarship Committee Criteria & Zero-Knowledge Eligibility Prover -->
+    <article class="folio-leaf" aria-labelledby="colTwoHeading">
+      <div class="folio-leaf-banner">
+        <div class="folio-numeral-stamp">FOLIO II</div>
+        <div class="folio-heading-group">
+          <h2 class="folio-title" id="colTwoHeading">Scholarship Committee &amp; ZK Prover</h2>
+          <p class="folio-subtitle">Bursary Threshold Predicate &amp; Unlinkable Nullifier Synthesis</p>
+        </div>
+        <span class="circuit-call-seal">submitEntry</span>
+      </div>
+
+      <label class="ledger-field">
+        <span class="ledger-field-label">Published Bursary Ordinance</span>
+        <select class="ledger-input" id="ordinanceSelector"></select>
+      </label>
+
+      <!-- Structured Bursary Ordinance Specification -->
+      <div class="ordinance-charter-sheet">
+        <div class="charter-sheet-header">
+          <span class="charter-code-tag" id="charterCodeBadge">ORD-2026</span>
+          <span class="charter-stipend-tag" id="charterStipendText">$12,500 Annual Fellowship</span>
+        </div>
+        <dl class="charter-criteria-list" id="charterRulesList">
+          <div class="criteria-pair">
+            <dt>Minimum GPA Baseline</dt>
+            <dd id="ruleMinGpa">3.50</dd>
+          </div>
+          <div class="criteria-pair">
+            <dt>Eligible Department</dt>
+            <dd id="ruleProgram">Code 101</dd>
+          </div>
+          <div class="criteria-pair">
+            <dt>Financial Need Ceiling</dt>
+            <dd id="ruleMaxNeed">$8,000</dd>
+          </div>
+          <div class="criteria-pair">
+            <dt>Minimum Credit Hours</dt>
+            <dd id="ruleMinCredits">60 Credits</dd>
+          </div>
+          <div class="criteria-pair">
+            <dt>Matriculation Required</dt>
+            <dd id="ruleEnrolled">Active Required</dd>
+          </div>
+          <div class="criteria-pair">
+            <dt>Available Bursary Slots</dt>
+            <dd id="ruleCapacity">3 Awards</dd>
+          </div>
+        </dl>
+      </div>
+
+      <button type="button" class="forest-ink-btn" id="btnProveEligibility">
+        Synthesize Zero-Knowledge Proof &amp; File Anonymous Receipt
+      </button>
+
+      <!-- Live Circuit Constraint Verification Ledger -->
+      <div class="prover-scribe-ledger" id="proverScribeConsole">
+        <div class="scribe-line is-muted">
+          Awaiting candidate proof synthesis against selected bursary ordinance...
+        </div>
+      </div>
+
+      <!-- Emitted Unlinkable Receipt Box -->
+      <div class="emitted-receipt-ticket" id="receiptCertificatePanel" hidden>
+        <div class="ticket-header-line">
+          <span class="datum-caption">Per-Ordinance Unlinkable Nullifier Receipt</span>
+          <span class="wax-verified-pill">DISCLOSED TO LEDGER</span>
+        </div>
+        <code class="cipher-scroll" id="outNullifierReceipt">0x...</code>
+      </div>
+    </article>
+
+    <!-- COLUMN III: Entropy Draw Roll & Grant Disbursement Register -->
+    <article class="folio-leaf" aria-labelledby="colThreeHeading">
+      <div class="folio-leaf-banner">
+        <div class="folio-numeral-stamp">FOLIO III</div>
+        <div class="folio-heading-group">
+          <h2 class="folio-title" id="colThreeHeading">Entropy Draw Roll &amp; Disbursement</h2>
+          <p class="folio-subtitle">Commit-Reveal Seed Selection &amp; Anonymous Stipend Collection</p>
+        </div>
+        <span class="circuit-call-seal">closeFunding / collectAward</span>
+      </div>
+
+      <p class="bursar-explanatory-prose">
+        When the filing window closes, the committee reveals the committed entropy seed. Each anonymous receipt computes a deterministic ticket hash inside the circuit; lowest ticket digests receive bursary awards without exposing student identity.
+      </p>
+
+      <div class="bursar-action-pair">
+        <button type="button" class="brass-outline-btn" id="btnSealEntropyDraw">
+          1. Reveal Entropy Seed &amp; Rank Roll
+        </button>
+        <button type="button" class="wax-stamp-btn" id="btnCollectDisbursement">
+          2. Collect Bursary with Private Secret
+        </button>
+      </div>
+
+      <div class="seed-disclosure-banner" id="seedDisclosureBox">
+        <span class="datum-caption">Revealed Public Entropy Seed</span>
+        <code class="cipher-scroll" id="outRevealedSeed">Awaiting committee seed reveal...</code>
+      </div>
+
+      <!-- Grant Disbursement Register Table -->
+      <div class="disbursement-roll-wrapper">
+        <table class="disbursement-roll-table" aria-label="Grant Disbursement Register">
+          <thead>
+            <tr>
+              <th scope="col">Anonymous Receipt</th>
+              <th scope="col">Draw Ticket Digest</th>
+              <th scope="col">Standing</th>
+              <th scope="col">Stipend</th>
+            </tr>
+          </thead>
+          <tbody id="disbursementRollBody"></tbody>
+        </table>
+      </div>
+
+      <div class="bursar-notice-strip" id="bursarNoticeToast" role="status" aria-live="polite">
+        Registrar Desk Ready: Select a candidate dossier tab or seal a transcript leaf to begin.
+      </div>
+    </article>
+
+  </div>
+
+  <!-- Full-Width Registrar Audit & Live In-Browser Compact Contract Execution Drawer -->
+  <aside class="archival-audit-drawer" aria-labelledby="drawerHeading">
+    <div class="drawer-top-ledger">
+      <div class="drawer-title-cluster">
+        <span class="drawer-eyebrow">IN-BROWSER WASM ON-CHAIN RUNTIME &amp; WITNESS AUDITOR</span>
+        <h2 class="drawer-heading" id="drawerHeading">
+          Registrar Audit &amp; Live In-Browser Compact Contract Execution Drawer
+        </h2>
+        <p class="drawer-description">
+          Executes the compiled <code>baseline.compact</code> contract directly inside this browser tab using <code>@midnight-ntwrk/compact-runtime</code>, genuine local witnesses, and an in-memory ledger state with zero server round-trips.
+        </p>
+      </div>
+
+      <div class="drawer-controls-cluster">
+        <span class="execution-state-seal" id="contractRunStatus">Chancery Idle</span>
+        <button type="button" class="wax-stamp-btn" id="btnExecuteCompiledContract">
+          Execute Compiled Compact Contract Round
+        </button>
+      </div>
+    </div>
+
+    <pre class="chancery-execution-scroll" id="contractExecutionStream">Press "Execute Compiled Compact Contract Round" to run all six compiled circuits (deploy, addRecord, createFunding, submitEntry, closeFunding, awardEntry, collectAward) in this tab.</pre>
+  </aside>
+
+  <script>
+    window.addEventListener('error', function (ev) {
+      document.documentElement.dataset.panic =
+        String(ev.message) + ' @ ' + (ev.filename || '') + ':' + ev.lineno;
+    });
+    window.addEventListener('unhandledrejection', function (ev) {
+      var reason = ev.reason;
+      document.documentElement.dataset.panic =
+        'rejection: ' + String((reason && reason.stack) || reason);
+    });
+  </script>
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

@@ -1,0 +1,954 @@
+/* University Registrar Bursar & Academic Dossier Desk Stylesheet */
+
+:root {
+  --parchment-sheet: #f5f0e6;
+  --parchment-cream: #faf6ee;
+  --linen-folio: #ebe4d5;
+  --linen-recessed: #e2d9c6;
+  --oxford-pine: #122b22;
+  --oxford-pine-deep: #0b1c16;
+  --oxford-pine-muted: #214437;
+  --wax-terracotta: #b45309;
+  --wax-terracotta-deep: #92400e;
+  --wax-amber-tint: rgba(180, 83, 9, 0.11);
+  --brass-rule: #b89146;
+  --brass-rule-soft: rgba(18, 43, 34, 0.18);
+  --iron-gall-ink: #18221f;
+  --slate-scribe: #3d4d47;
+  --faded-rubric: #5d6e67;
+  --crimson-refusal: #991b1b;
+  --emerald-attest: #14532d;
+  --type-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --type-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --type-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100vh;
+}
+
+.archival-desk-body {
+  background-color: var(--parchment-sheet);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(18, 43, 34, 0.024) 0px,
+      rgba(18, 43, 34, 0.024) 1px,
+      transparent 1px,
+      transparent 28px
+    ),
+    radial-gradient(circle at 15% 8%, rgba(184, 145, 70, 0.11), transparent 52%),
+    radial-gradient(circle at 85% 92%, rgba(18, 43, 34, 0.07), transparent 58%);
+  color: var(--iron-gall-ink);
+  font-family: var(--type-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Horizontal Brass-Ruled Academic Masthead */
+.chancery-masthead {
+  background-color: var(--oxford-pine);
+  color: var(--parchment-sheet);
+  border-bottom: 3px double var(--brass-rule);
+  padding: 1.15rem 2rem 0.9rem;
+  box-shadow: 0 6px 20px rgba(11, 28, 22, 0.22);
+}
+
+.chancery-upper-tier {
+  max-width: 1480px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.university-insignia-block {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.oxford-seal-svg {
+  width: 62px;
+  height: 62px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+}
+
+.chancery-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.chancery-super {
+  font-family: var(--type-mono);
+  font-size: 0.69rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #e3c383;
+}
+
+.chancery-heading {
+  font-family: var(--type-serif);
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--parchment-cream);
+}
+
+.chancery-subline {
+  font-size: 0.82rem;
+  color: #cbd5d0;
+}
+
+/* Registrar Ledger Counters */
+.registrar-ledger-counters {
+  display: flex;
+  align-items: stretch;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.bursar-counter-cell {
+  background: var(--oxford-pine-deep);
+  border: 1px solid rgba(200, 157, 84, 0.38);
+  border-radius: 4px;
+  padding: 0.45rem 0.8rem;
+  min-width: 122px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.18rem;
+}
+
+.counter-caption {
+  font-family: var(--type-mono);
+  font-size: 0.63rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #b7c4be;
+}
+
+.counter-cipher {
+  font-family: var(--type-mono);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--parchment-cream);
+}
+
+.wax-seal-ok {
+  color: #fde68a;
+}
+
+.wax-seal-breach {
+  color: #fca5a5;
+}
+
+.chancery-brass-divider {
+  max-width: 1480px;
+  margin: 0.85rem auto 0.75rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(200, 157, 84, 0.65) 15%,
+    rgba(200, 157, 84, 0.65) 85%,
+    transparent
+  );
+}
+
+.chancery-lower-tier {
+  max-width: 1480px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dossier-scenario-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.scenario-tab-prompt {
+  font-family: var(--type-serif);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: #e3c383;
+  margin-right: 0.25rem;
+}
+
+.dossier-tab-btn {
+  font-family: var(--type-sans);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #dbe3df;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(200, 157, 84, 0.35);
+  border-radius: 3px;
+  padding: 0.42rem 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.dossier-tab-btn:hover {
+  background: rgba(200, 157, 84, 0.16);
+  color: #ffffff;
+  transform: translate3d(0, -1px, 0);
+}
+
+.dossier-tab-btn.is-selected {
+  background: var(--wax-terracotta);
+  border-color: #f59e0b;
+  color: var(--parchment-cream);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.chancery-meta-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.compact-spec-tag {
+  font-family: var(--type-mono);
+  font-size: 0.7rem;
+  color: #cbd5d0;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid rgba(200, 157, 84, 0.28);
+  border-radius: 3px;
+  background: var(--oxford-pine-deep);
+}
+
+.acoustics-switch-btn {
+  font-family: var(--type-mono);
+  font-size: 0.71rem;
+  font-weight: 600;
+  padding: 0.34rem 0.7rem;
+  border-radius: 3px;
+  border: 1px solid #e3c383;
+  background: transparent;
+  color: #e3c383;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.acoustics-switch-btn.is-active {
+  background: #e3c383;
+  color: var(--oxford-pine-deep);
+}
+
+/* Three-Column Horizontal Academic Dossier Folio */
+.dossier-folio-triptych {
+  max-width: 1480px;
+  width: 100%;
+  margin: 1.5rem auto 1.25rem;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.35rem;
+  align-items: start;
+}
+
+@media (max-width: 1220px) {
+  .dossier-folio-triptych {
+    grid-template-columns: 1fr;
+  }
+}
+
+.folio-leaf {
+  background-color: var(--linen-folio);
+  border: 1.5px solid var(--oxford-pine);
+  border-top: 4px solid var(--oxford-pine);
+  border-radius: 4px;
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.05rem;
+  box-shadow:
+    0 3px 0 rgba(18, 43, 34, 0.12),
+    0 10px 24px rgba(24, 34, 31, 0.07);
+}
+
+.folio-leaf-banner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--brass-rule-soft);
+}
+
+.folio-numeral-stamp {
+  font-family: var(--type-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.22rem 0.48rem;
+  background: var(--oxford-pine);
+  color: #e3c383;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.folio-heading-group {
+  flex: 1;
+}
+
+.folio-title {
+  font-family: var(--type-serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--oxford-pine);
+  line-height: 1.2;
+}
+
+.folio-subtitle {
+  font-size: 0.76rem;
+  color: var(--slate-scribe);
+  margin-top: 0.18rem;
+}
+
+.circuit-call-seal {
+  font-family: var(--type-mono);
+  font-size: 0.67rem;
+  font-weight: 600;
+  color: var(--wax-terracotta-deep);
+  background: var(--wax-amber-tint);
+  border: 1px solid rgba(180, 83, 9, 0.35);
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* Ledger Input Grid */
+.ledger-entry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.ledger-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.ledger-field-label {
+  font-family: var(--type-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--slate-scribe);
+}
+
+.ledger-input {
+  background: var(--parchment-cream);
+  border: 1px solid rgba(18, 43, 34, 0.32);
+  border-radius: 3px;
+  padding: 0.52rem 0.68rem;
+  font-family: var(--type-mono);
+  font-size: 0.82rem;
+  color: var(--iron-gall-ink);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ledger-input:focus {
+  border-color: var(--wax-terracotta);
+  box-shadow: 0 0 0 2px rgba(180, 83, 9, 0.15);
+}
+
+/* Buttons */
+.wax-stamp-btn {
+  background: var(--wax-terracotta);
+  color: var(--parchment-cream);
+  border: 1px solid var(--wax-terracotta-deep);
+  border-radius: 3px;
+  padding: 0.72rem 1rem;
+  font-family: var(--type-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 2px 0 var(--wax-terracotta-deep);
+  transition: background-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+}
+
+.wax-stamp-btn:hover:not(:disabled) {
+  background: var(--wax-terracotta-deep);
+  transform: translate3d(0, -1px, 0);
+}
+
+.wax-stamp-btn:disabled,
+.forest-ink-btn:disabled,
+.brass-outline-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.forest-ink-btn {
+  background: var(--oxford-pine);
+  color: var(--parchment-cream);
+  border: 1px solid var(--oxford-pine-deep);
+  border-radius: 3px;
+  padding: 0.75rem 1rem;
+  font-family: var(--type-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 2px 0 var(--oxford-pine-deep);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.forest-ink-btn:hover:not(:disabled) {
+  background: var(--oxford-pine-muted);
+  transform: translate3d(0, -1px, 0);
+}
+
+.brass-outline-btn {
+  background: var(--parchment-cream);
+  color: var(--oxford-pine);
+  border: 1.5px solid var(--oxford-pine);
+  border-radius: 3px;
+  padding: 0.68rem 0.9rem;
+  font-family: var(--type-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.brass-outline-btn:hover:not(:disabled) {
+  background: var(--linen-recessed);
+  transform: translate3d(0, -1px, 0);
+}
+
+/* Sealed Transcript Certificate Card */
+.sealed-transcript-parchment {
+  background: var(--parchment-cream);
+  border: 1px solid rgba(18, 43, 34, 0.28);
+  border-left: 4px solid var(--wax-terracotta);
+  border-radius: 3px;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.parchment-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed rgba(18, 43, 34, 0.22);
+}
+
+.parchment-rubric {
+  font-family: var(--type-serif);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--oxford-pine);
+}
+
+.shield-lens-toggle {
+  font-family: var(--type-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.22rem 0.5rem;
+  border-radius: 2px;
+  border: 1px solid var(--oxford-pine);
+  background: var(--linen-folio);
+  color: var(--oxford-pine);
+  cursor: pointer;
+}
+
+.parchment-datum-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.parchment-datum {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.datum-caption {
+  font-family: var(--type-mono);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--faded-rubric);
+}
+
+.datum-value {
+  font-family: var(--type-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--iron-gall-ink);
+}
+
+.redacted-wax-tag {
+  display: inline-block;
+  font-family: var(--type-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--wax-terracotta-deep);
+  background: var(--wax-amber-tint);
+  border: 1px solid rgba(180, 83, 9, 0.35);
+  padding: 0.1rem 0.38rem;
+  border-radius: 2px;
+}
+
+.parchment-cipher-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.cipher-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.cipher-scroll {
+  display: block;
+  background: var(--linen-recessed);
+  border: 1px solid rgba(18, 43, 34, 0.2);
+  border-radius: 2px;
+  padding: 0.38rem 0.55rem;
+  font-family: var(--type-mono);
+  font-size: 0.71rem;
+  color: var(--iron-gall-ink);
+  word-break: break-all;
+}
+
+/* Historic Merkle Tree Path Diagram */
+.merkle-lineage-box {
+  background: var(--parchment-cream);
+  border: 1px solid rgba(18, 43, 34, 0.24);
+  border-radius: 3px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.lineage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lineage-depth-note {
+  font-family: var(--type-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--oxford-pine);
+}
+
+.merkle-chain-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+  contain: layout paint;
+  will-change: transform;
+}
+
+.merkle-node-cell {
+  flex: 1;
+  background: var(--linen-folio);
+  border: 1px solid rgba(18, 43, 34, 0.26);
+  border-radius: 3px;
+  padding: 0.42rem 0.3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.14rem;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.merkle-node-cell.is-probing {
+  border-color: var(--wax-terracotta);
+  background: var(--wax-amber-tint);
+  transform: translate3d(0, -2px, 0);
+}
+
+.merkle-node-cell.is-attested {
+  border-color: var(--emerald-attest);
+  background: rgba(20, 83, 45, 0.12);
+}
+
+.node-tier-tag {
+  font-family: var(--type-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  color: var(--faded-rubric);
+}
+
+.node-hash-snippet {
+  font-family: var(--type-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--iron-gall-ink);
+}
+
+.merkle-link-glyph {
+  font-family: var(--type-serif);
+  font-weight: 700;
+  color: var(--wax-terracotta);
+  font-size: 0.9rem;
+}
+
+/* Column II: Ordinance Charter Sheet & Prover Console */
+.ordinance-charter-sheet {
+  background: var(--parchment-cream);
+  border: 1px solid rgba(18, 43, 34, 0.28);
+  border-radius: 3px;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.charter-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--brass-rule-soft);
+  padding-bottom: 0.45rem;
+}
+
+.charter-code-tag {
+  font-family: var(--type-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--oxford-pine);
+  background: var(--linen-recessed);
+  padding: 0.15rem 0.45rem;
+  border-radius: 2px;
+}
+
+.charter-stipend-tag {
+  font-family: var(--type-serif);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--wax-terracotta-deep);
+}
+
+.charter-criteria-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 0.75rem;
+}
+
+.criteria-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+}
+
+.criteria-pair dt {
+  font-family: var(--type-mono);
+  font-size: 0.63rem;
+  text-transform: uppercase;
+  color: var(--faded-rubric);
+}
+
+.criteria-pair dd {
+  font-family: var(--type-mono);
+  font-size: 0.79rem;
+  font-weight: 600;
+  color: var(--iron-gall-ink);
+}
+
+.prover-scribe-ledger {
+  background: var(--oxford-pine-deep);
+  color: var(--parchment-cream);
+  border: 1px solid var(--oxford-pine);
+  border-radius: 3px;
+  padding: 0.75rem;
+  font-family: var(--type-mono);
+  font-size: 0.72rem;
+  min-height: 155px;
+  max-height: 215px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+  contain: layout paint;
+}
+
+.scribe-line {
+  line-height: 1.42;
+}
+
+.scribe-line.is-muted {
+  color: #9ab0a7;
+  font-style: italic;
+}
+
+.scribe-line.is-step {
+  color: #f3d79b;
+}
+
+.scribe-line.is-pass {
+  color: #86efac;
+}
+
+.scribe-line.is-fail {
+  color: #fca5a5;
+  font-weight: 600;
+}
+
+.emitted-receipt-ticket {
+  background: var(--parchment-cream);
+  border: 1px solid var(--emerald-attest);
+  border-left: 4px solid var(--emerald-attest);
+  border-radius: 3px;
+  padding: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ticket-header-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wax-verified-pill {
+  font-family: var(--type-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--emerald-attest);
+  background: rgba(20, 83, 45, 0.12);
+  padding: 0.12rem 0.4rem;
+  border-radius: 2px;
+}
+
+/* Column III: Entropy Draw Roll & Disbursement Register */
+.bursar-explanatory-prose {
+  font-size: 0.8rem;
+  color: var(--slate-scribe);
+  line-height: 1.5;
+}
+
+.bursar-action-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.seed-disclosure-banner {
+  background: var(--parchment-cream);
+  border: 1px solid rgba(18, 43, 34, 0.24);
+  border-radius: 3px;
+  padding: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.disbursement-roll-wrapper {
+  background: var(--parchment-cream);
+  border: 1px solid rgba(18, 43, 34, 0.28);
+  border-radius: 3px;
+  overflow-x: auto;
+}
+
+.disbursement-roll-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--type-mono);
+  font-size: 0.71rem;
+}
+
+.disbursement-roll-table th {
+  background: var(--linen-recessed);
+  color: var(--oxford-pine);
+  text-align: left;
+  text-transform: uppercase;
+  font-size: 0.63rem;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid rgba(18, 43, 34, 0.25);
+}
+
+.disbursement-roll-table td {
+  padding: 0.52rem 0.6rem;
+  border-bottom: 1px solid rgba(18, 43, 34, 0.12);
+  color: var(--iron-gall-ink);
+}
+
+.roll-empty-cell {
+  text-align: center;
+  color: var(--faded-rubric);
+  font-style: italic;
+  padding: 1.1rem 0.6rem;
+}
+
+.standing-tag {
+  display: inline-block;
+  padding: 0.1rem 0.38rem;
+  border-radius: 2px;
+  font-size: 0.64rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.standing-pending {
+  background: var(--linen-recessed);
+  color: var(--slate-scribe);
+}
+
+.standing-awarded {
+  background: var(--wax-amber-tint);
+  color: var(--wax-terracotta-deep);
+  border: 1px solid rgba(180, 83, 9, 0.35);
+}
+
+.standing-collected {
+  background: rgba(20, 83, 45, 0.14);
+  color: var(--emerald-attest);
+  border: 1px solid rgba(20, 83, 45, 0.35);
+}
+
+.bursar-notice-strip {
+  background: var(--linen-recessed);
+  border-left: 3px solid var(--oxford-pine);
+  padding: 0.55rem 0.7rem;
+  font-family: var(--type-mono);
+  font-size: 0.71rem;
+  color: var(--oxford-pine);
+}
+
+.bursar-notice-strip.is-alert {
+  border-left-color: var(--crimson-refusal);
+  color: var(--crimson-refusal);
+  background: rgba(153, 27, 27, 0.08);
+}
+
+/* Full-Width Registrar Audit & Live In-Browser Compact Contract Execution Drawer */
+.archival-audit-drawer {
+  max-width: 1480px;
+  width: calc(100% - 4rem);
+  margin: 0.25rem auto 3rem;
+  background: var(--linen-folio);
+  border: 2px solid var(--oxford-pine);
+  border-radius: 4px;
+  padding: 1.35rem 1.5rem;
+  box-shadow: 0 8px 26px rgba(18, 43, 34, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.drawer-top-ledger {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--brass-rule-soft);
+}
+
+.drawer-title-cluster {
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.drawer-eyebrow {
+  font-family: var(--type-mono);
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--wax-terracotta-deep);
+}
+
+.drawer-heading {
+  font-family: var(--type-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--oxford-pine);
+}
+
+.drawer-description {
+  font-size: 0.82rem;
+  color: var(--slate-scribe);
+}
+
+.drawer-description code {
+  font-family: var(--type-mono);
+  font-size: 0.76rem;
+  background: var(--parchment-cream);
+  padding: 0.08rem 0.32rem;
+  border-radius: 2px;
+}
+
+.drawer-controls-cluster {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.execution-state-seal {
+  font-family: var(--type-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.45rem 0.75rem;
+  background: var(--parchment-cream);
+  border: 1px solid var(--oxford-pine);
+  color: var(--oxford-pine);
+  border-radius: 3px;
+}
+
+.chancery-execution-scroll {
+  background: var(--oxford-pine-deep);
+  color: var(--parchment-cream);
+  border: 1px solid var(--oxford-pine);
+  border-radius: 3px;
+  padding: 1rem 1.15rem;
+  font-family: var(--type-mono);
+  font-size: 0.76rem;
+  line-height: 1.55;
+  max-height: 400px;
+  overflow: auto;
+  white-space: pre-wrap;
+  contain: layout paint;
+}
