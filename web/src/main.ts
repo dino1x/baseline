@@ -76,12 +76,12 @@ function renderCertificatePrivacyLens(): void {
   const toggleBtn = queryEl<HTMLButtonElement>('btnTogglePrivacyLens');
 
   if (observerShieldActive) {
-    toggleBtn.textContent = 'Lens: PUBLIC OBSERVER (SHIELDED)';
-    gpaCell.innerHTML = '<span class="redacted-wax-tag">WITNESS ONLY</span>';
-    needCell.innerHTML = '<span class="redacted-wax-tag">WITNESS ONLY</span>';
+    toggleBtn.textContent = 'View: Public';
+    gpaCell.innerHTML = '<span class="redacted-wax-tag">SHIELDED</span>';
+    needCell.innerHTML = '<span class="redacted-wax-tag">SHIELDED</span>';
   } else {
-    toggleBtn.textContent = 'Lens: STUDENT HOLDER KEY (UNSEALED)';
-    gpaCell.textContent = `${(scholarVault.transcript.gpaScaled / 100).toFixed(2)} / 4.00`;
+    toggleBtn.textContent = 'View: Holder';
+    gpaCell.textContent = `${(scholarVault.transcript.gpaScaled / 100).toFixed(2)}`;
     needCell.textContent = `$${scholarVault.transcript.assessedNeedUsd.toLocaleString()}`;
   }
 }
@@ -134,12 +134,12 @@ async function sealAndInscribeCurrentDossier(): Promise<void> {
   queryEl<HTMLElement>('leafIndexIndicator').textContent = `Leaf #${insertion.leafPosition}`;
 
   const standingEl = queryEl<HTMLElement>('certStandingText');
-  standingEl.textContent = activeMatriculation ? 'MATRICULATED' : 'WITHDRAWN';
+  standingEl.textContent = activeMatriculation ? 'ACTIVE' : 'INACTIVE';
   standingEl.style.color = activeMatriculation
     ? 'var(--emerald-attest)'
     : 'var(--crimson-refusal)';
 
-  queryEl<HTMLElement>('certDepartmentText').textContent = `Faculty ${programCode}`;
+  queryEl<HTMLElement>('certDepartmentText').textContent = `#${programCode}`;
   renderCertificatePrivacyLens();
 
   const snapshots = chanceryRegistry.chanceryTree.deriveBranchSnapshots(insertion.leafPosition);
@@ -159,7 +159,7 @@ function populateOrdinanceDropdown(): void {
   for (const ord of chanceryRegistry.listOrdinances()) {
     const option = document.createElement('option');
     option.value = ord.ordinanceId;
-    option.textContent = `${ord.title} [${ord.stage.toUpperCase()} — ${ord.grantSlots} SLOTS]`;
+    option.textContent = `${ord.title} (${ord.grantSlots} slots)`;
     selector.appendChild(option);
   }
 
@@ -178,26 +178,26 @@ function renderSelectedOrdinanceCharter(): void {
     `${ord.bursarCode} (${ord.stage.toUpperCase()})`;
   queryEl<HTMLElement>('charterStipendText').textContent = ord.stipendAmount;
   queryEl<HTMLElement>('ruleMinGpa').textContent =
-    `${(ord.rules.minGpaScaled / 100).toFixed(2)}+ GPA`;
+    `${(ord.rules.minGpaScaled / 100).toFixed(2)}+`;
   queryEl<HTMLElement>('ruleProgram').textContent =
     ord.rules.requiredProgramCode === 0
-      ? 'All Faculties (0)'
-      : `Faculty Code ${ord.rules.requiredProgramCode}`;
+      ? 'Any'
+      : `#${ord.rules.requiredProgramCode}`;
   queryEl<HTMLElement>('ruleMaxNeed').textContent =
     ord.rules.maxNeedCapUsd === 0
-      ? 'Uncapped'
-      : `<= $${ord.rules.maxNeedCapUsd.toLocaleString()}`;
+      ? 'None'
+      : `<=$${ord.rules.maxNeedCapUsd.toLocaleString()}`;
   queryEl<HTMLElement>('ruleMinCredits').textContent =
-    `${ord.rules.minCreditsRequired} Credit Hrs`;
+    `${ord.rules.minCreditsRequired}`;
   queryEl<HTMLElement>('ruleEnrolled').textContent = ord.rules.mustBeMatriculated
-    ? 'Active Required'
-    : 'Unrestricted';
-  queryEl<HTMLElement>('ruleCapacity').textContent = `${ord.grantSlots} Bursary Grants`;
+    ? 'Active'
+    : 'Any';
+  queryEl<HTMLElement>('ruleCapacity').textContent = `${ord.grantSlots}`;
 
   const revealedSeed = chanceryRegistry.revealedSeedFor(ord.ordinanceId);
   queryEl<HTMLElement>('outRevealedSeed').textContent = revealedSeed
     ? `0x${revealedSeed}`
-    : 'Awaiting committee seed reveal...';
+    : 'Unrevealed';
 }
 
 function clearMerkleNodeHighlights(): void {
@@ -426,7 +426,7 @@ async function renderDisbursementRollTable(): Promise<void> {
   if (filings.length === 0) {
     const emptyRow = document.createElement('tr');
     emptyRow.innerHTML =
-      '<td colspan="4" class="roll-empty-cell">No candidate receipts filed under this bursary ordinance yet.</td>';
+      '<td colspan="4" class="roll-empty-cell">No entries yet.</td>';
     tbody.appendChild(emptyRow);
     return;
   }
@@ -436,7 +436,7 @@ async function renderDisbursementRollTable(): Promise<void> {
   for (const filing of filings) {
     const tr = document.createElement('tr');
 
-    let ticketDisplay = 'Awaiting Seed';
+    let ticketDisplay = 'Pending';
     if (filing.ticketHex) {
       ticketDisplay = `0x${filing.ticketHex.slice(0, 12)}..`;
     } else if (seedBytes) {
@@ -456,8 +456,8 @@ async function renderDisbursementRollTable(): Promise<void> {
 
     const stipendNote =
       filing.stage === 'pending'
-        ? 'In Queue'
-        : (ordinance?.stipendAmount ?? 'Full Grant');
+        ? 'Queued'
+        : (ordinance?.stipendAmount ?? 'Grant');
 
     tr.innerHTML = `
       <td>0x${filing.receiptHex.slice(0, 12)}..</td>
@@ -488,7 +488,7 @@ function syncMastheadCounters(): void {
     leakVerdictEl.textContent = `BREACH: ${audit.exposedArtifacts.join(', ')}`;
     leakVerdictEl.className = 'counter-cipher wax-seal-breach';
   } else {
-    leakVerdictEl.textContent = '0 BYTES LEAKED';
+    leakVerdictEl.textContent = '0 BYTES';
     leakVerdictEl.className = 'counter-cipher wax-seal-ok';
   }
 }
@@ -510,7 +510,7 @@ async function executeLiveCompiledContract(): Promise<void> {
 
   runBtn.disabled = true;
   streamBox.textContent = '';
-  statusSeal.textContent = 'Executing Circuits...';
+  statusSeal.textContent = 'Running...';
   const startedAt = performance.now();
 
   try {
@@ -520,12 +520,12 @@ async function executeLiveCompiledContract(): Promise<void> {
     });
     document.body.dataset.round = 'completed';
     const elapsedMs = Math.round(performance.now() - startedAt);
-    statusSeal.textContent = `Verified in ${elapsedMs} ms`;
+    statusSeal.textContent = `Verified (${elapsedMs} ms)`;
     bursarChordChime(false);
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     streamBox.textContent += `\nCircuit execution rejected: ${msg}`;
-    statusSeal.textContent = 'Execution Rejected';
+    statusSeal.textContent = 'Rejected';
     document.body.dataset.round = `rejected: ${msg}`;
     bursarChordChime(true);
   } finally {
@@ -543,7 +543,7 @@ function bindDeskInteractions(): void {
     activateScenarioTab(tabMerit);
     populateDossierFields(3.92, 101, 3200, 74, true, 20271231);
     await sealAndInscribeCurrentDossier();
-    postBursarNotice('Loaded Merit Scholar Dossier (3.92 GPA, $3,200 Assessed Need).');
+    postBursarNotice('Merit preset loaded (3.92 GPA).');
   });
 
   tabNeed.addEventListener('click', async () => {
@@ -551,7 +551,7 @@ function bindDeskInteractions(): void {
     activateScenarioTab(tabNeed);
     populateDossierFields(3.45, 101, 8500, 60, true, 20271231);
     await sealAndInscribeCurrentDossier();
-    postBursarNotice('Loaded Need Grantee Dossier (3.45 GPA, $8,500 Assessed Need).');
+    postBursarNotice('Need preset loaded ($8,500 need).');
   });
 
   tabReject.addEventListener('click', async () => {
@@ -559,15 +559,13 @@ function bindDeskInteractions(): void {
     activateScenarioTab(tabReject);
     populateDossierFields(2.8, 101, 5000, 45, true, 20271231);
     await sealAndInscribeCurrentDossier();
-    postBursarNotice(
-      'Loaded Under-Threshold Dossier (2.80 GPA) to demonstrate circuit predicate refusal.',
-    );
+    postBursarNotice('Ineligible preset loaded (2.80 GPA).');
   });
 
   const acousticsBtn = queryEl<HTMLButtonElement>('btnAcousticsToggle');
   acousticsBtn.addEventListener('click', () => {
     const active = toggleBursarAcoustics();
-    acousticsBtn.textContent = `Desk Acoustics: ${active ? 'ON' : 'OFF'}`;
+    acousticsBtn.textContent = `Sound: ${active ? 'ON' : 'OFF'}`;
     acousticsBtn.classList.toggle('is-active', active);
     if (active) nibClick();
   });
@@ -575,7 +573,7 @@ function bindDeskInteractions(): void {
   queryEl<HTMLButtonElement>('btnInscribeDossier').addEventListener('click', async () => {
     waxSealThud();
     await sealAndInscribeCurrentDossier();
-    postBursarNotice('Candidate transcript sealed and appended to HistoricMerkleTree<16>.');
+    postBursarNotice('Record committed to Merkle tree.');
   });
 
   queryEl<HTMLButtonElement>('btnTogglePrivacyLens').addEventListener('click', () => {

@@ -38,9 +38,9 @@ export interface ScholarDossierVault {
 const DEFAULT_ORDINANCES: BursaryOrdinance[] = [
   {
     ordinanceId: 'a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0',
-    title: 'STEM Excellence Bursary 2026',
-    bursarCode: 'ORD-2026-STEM',
-    stipendAmount: '$12,500 Annual Fellowship',
+    title: 'STEM Fellowship',
+    bursarCode: 'ORD-STEM',
+    stipendAmount: '$12,500',
     grantSlots: 3,
     stage: 'accepting',
     rules: {
@@ -54,9 +54,9 @@ const DEFAULT_ORDINANCES: BursaryOrdinance[] = [
   },
   {
     ordinanceId: 'f9e8d7c6b5a43210fedcba9876543210abcdef0123456789abcdef0123456789',
-    title: 'First-Generation Scholar Endowment',
-    bursarCode: 'ORD-2026-FGEN',
-    stipendAmount: '$9,000 Matriculation Grant',
+    title: 'First-Gen Grant',
+    bursarCode: 'ORD-FGEN',
+    stipendAmount: '$9,000',
     grantSlots: 5,
     stage: 'accepting',
     rules: {

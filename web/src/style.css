@@ -61,7 +61,7 @@ body {
   background-color: var(--oxford-pine);
   color: var(--parchment-sheet);
   border-bottom: 3px double var(--brass-rule);
-  padding: 1.15rem 2rem 0.9rem;
+  padding: 1rem 1.75rem 0.85rem;
   box-shadow: 0 6px 20px rgba(11, 28, 22, 0.22);
 }
 
@@ -71,19 +71,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 1.15rem;
   flex-wrap: wrap;
 }
 
 .university-insignia-block {
   display: flex;
   align-items: center;
-  gap: 1.1rem;
+  gap: 0.95rem;
+  min-width: 0;
 }
 
 .oxford-seal-svg {
-  width: 62px;
-  height: 62px;
+  width: 56px;
+  height: 56px;
   flex-shrink: 0;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
 }
@@ -91,27 +92,29 @@ body {
 .chancery-titles {
   display: flex;
   flex-direction: column;
-  gap: 0.12rem;
+  gap: 0.1rem;
+  min-width: 0;
 }
 
 .chancery-super {
   font-family: var(--type-mono);
-  font-size: 0.69rem;
+  font-size: 0.66rem;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   color: #e3c383;
 }
 
 .chancery-heading {
   font-family: var(--type-serif);
-  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  font-size: clamp(1.25rem, 1.85vw, 1.65rem);
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--parchment-cream);
+  line-height: 1.15;
 }
 
 .chancery-subline {
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   color: #cbd5d0;
 }
 
@@ -119,7 +122,7 @@ body {
 .registrar-ledger-counters {
   display: flex;
   align-items: stretch;
-  gap: 0.65rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
@@ -127,27 +130,29 @@ body {
   background: var(--oxford-pine-deep);
   border: 1px solid rgba(200, 157, 84, 0.38);
   border-radius: 4px;
-  padding: 0.45rem 0.8rem;
-  min-width: 122px;
+  padding: 0.38rem 0.65rem;
+  min-width: 102px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 0.18rem;
+  gap: 0.14rem;
 }
 
 .counter-caption {
   font-family: var(--type-mono);
-  font-size: 0.63rem;
+  font-size: 0.6rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: #b7c4be;
+  white-space: nowrap;
 }
 
 .counter-cipher {
   font-family: var(--type-mono);
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--parchment-cream);
+  white-space: nowrap;
 }
 
 .wax-seal-ok {
@@ -160,7 +165,7 @@ body {
 
 .chancery-brass-divider {
   max-width: 1480px;
-  margin: 0.85rem auto 0.75rem;
+  margin: 0.75rem auto 0.65rem;
   height: 1px;
   background: linear-gradient(
     90deg,
@@ -177,34 +182,34 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
 .dossier-scenario-tabs {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
   flex-wrap: wrap;
 }
 
 .scenario-tab-prompt {
   font-family: var(--type-serif);
   font-style: italic;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   color: #e3c383;
-  margin-right: 0.25rem;
+  margin-right: 0.15rem;
 }
 
 .dossier-tab-btn {
   font-family: var(--type-sans);
-  font-size: 0.76rem;
+  font-size: 0.73rem;
   font-weight: 600;
   color: #dbe3df;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(200, 157, 84, 0.35);
   border-radius: 3px;
-  padding: 0.42rem 0.8rem;
+  padding: 0.38rem 0.68rem;
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
@@ -225,29 +230,31 @@ body {
 .chancery-meta-controls {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
 }
 
 .compact-spec-tag {
   font-family: var(--type-mono);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: #cbd5d0;
-  padding: 0.3rem 0.6rem;
+  padding: 0.28rem 0.55rem;
   border: 1px solid rgba(200, 157, 84, 0.28);
   border-radius: 3px;
   background: var(--oxford-pine-deep);
+  white-space: nowrap;
 }
 
 .acoustics-switch-btn {
   font-family: var(--type-mono);
-  font-size: 0.71rem;
+  font-size: 0.69rem;
   font-weight: 600;
-  padding: 0.34rem 0.7rem;
+  padding: 0.3rem 0.65rem;
   border-radius: 3px;
   border: 1px solid #e3c383;
   background: transparent;
   color: #e3c383;
   cursor: pointer;
+  white-space: nowrap;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
@@ -260,116 +267,137 @@ body {
 .dossier-folio-triptych {
   max-width: 1480px;
   width: 100%;
-  margin: 1.5rem auto 1.25rem;
-  padding: 0 2rem;
+  margin: 1.35rem auto 1.25rem;
+  padding: 0 1.75rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.35rem;
-  align-items: start;
+  gap: 1.25rem;
+  align-items: stretch;
 }
 
-@media (max-width: 1220px) {
+@media (max-width: 1180px) {
   .dossier-folio-triptych {
     grid-template-columns: 1fr;
   }
 }
 
 .folio-leaf {
+  min-width: 0;
+  overflow: hidden;
   background-color: var(--linen-folio);
   border: 1.5px solid var(--oxford-pine);
   border-top: 4px solid var(--oxford-pine);
   border-radius: 4px;
-  padding: 1.35rem;
+  padding: 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: 1.05rem;
+  gap: 0.95rem;
   box-shadow:
     0 3px 0 rgba(18, 43, 34, 0.12),
     0 10px 24px rgba(24, 34, 31, 0.07);
 }
 
 .folio-leaf-banner {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.65rem;
-  padding-bottom: 0.8rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "stamp seal"
+    "heading heading";
+  align-items: center;
+  row-gap: 0.45rem;
+  column-gap: 0.5rem;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--brass-rule-soft);
 }
 
 .folio-numeral-stamp {
+  grid-area: stamp;
+  justify-self: start;
   font-family: var(--type-mono);
-  font-size: 0.66rem;
+  font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.08em;
-  padding: 0.22rem 0.48rem;
+  padding: 0.2rem 0.48rem;
   background: var(--oxford-pine);
   color: #e3c383;
   border-radius: 2px;
-  flex-shrink: 0;
 }
 
 .folio-heading-group {
-  flex: 1;
+  grid-area: heading;
+  min-width: 0;
 }
 
 .folio-title {
   font-family: var(--type-serif);
-  font-size: 1.2rem;
+  font-size: 1.16rem;
   font-weight: 700;
   color: var(--oxford-pine);
-  line-height: 1.2;
+  line-height: 1.22;
 }
 
 .folio-subtitle {
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   color: var(--slate-scribe);
-  margin-top: 0.18rem;
+  margin-top: 0.15rem;
 }
 
 .circuit-call-seal {
+  grid-area: seal;
+  justify-self: end;
   font-family: var(--type-mono);
-  font-size: 0.67rem;
+  font-size: 0.65rem;
   font-weight: 600;
   color: var(--wax-terracotta-deep);
   background: var(--wax-amber-tint);
   border: 1px solid rgba(180, 83, 9, 0.35);
-  padding: 0.2rem 0.5rem;
+  padding: 0.18rem 0.48rem;
   border-radius: 3px;
   white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Ledger Input Grid */
 .ledger-entry-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  align-items: end;
 }
 
 .ledger-field {
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.28rem;
+  justify-content: space-between;
+  gap: 0.25rem;
 }
 
 .ledger-field-label {
   font-family: var(--type-mono);
-  font-size: 0.68rem;
+  font-size: 0.63rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   color: var(--slate-scribe);
+  line-height: 1.25;
 }
 
 .ledger-input {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   background: var(--parchment-cream);
   border: 1px solid rgba(18, 43, 34, 0.32);
   border-radius: 3px;
-  padding: 0.52rem 0.68rem;
+  padding: 0.48rem 0.58rem;
   font-family: var(--type-mono);
-  font-size: 0.82rem;
+  font-size: 0.79rem;
   color: var(--iron-gall-ink);
   outline: none;
+  text-overflow: ellipsis;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -491,11 +519,12 @@ body {
 
 .parchment-datum-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.6rem;
 }
 
 .parchment-datum {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 0.12rem;
@@ -567,6 +596,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .lineage-depth-note {
@@ -574,6 +604,7 @@ body {
   font-size: 0.68rem;
   font-weight: 600;
   color: var(--oxford-pine);
+  white-space: nowrap;
 }
 
 .merkle-chain-track {
@@ -587,10 +618,12 @@ body {
 
 .merkle-node-cell {
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
   background: var(--linen-folio);
   border: 1px solid rgba(18, 43, 34, 0.26);
   border-radius: 3px;
-  padding: 0.42rem 0.3rem;
+  padding: 0.42rem 0.25rem;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -611,16 +644,22 @@ body {
 
 .node-tier-tag {
   font-family: var(--type-mono);
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   text-transform: uppercase;
   color: var(--faded-rubric);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .node-hash-snippet {
   font-family: var(--type-mono);
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 600;
   color: var(--iron-gall-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .merkle-link-glyph {
@@ -628,6 +667,7 @@ body {
   font-weight: 700;
   color: var(--wax-terracotta);
   font-size: 0.9rem;
+  flex-shrink: 0;
 }
 
 /* Column II: Ordinance Charter Sheet & Prover Console */
@@ -645,6 +685,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
   border-bottom: 1px solid var(--brass-rule-soft);
   padding-bottom: 0.45rem;
 }
@@ -668,11 +710,12 @@ body {
 
 .charter-criteria-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.5rem 0.75rem;
 }
 
 .criteria-pair {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 0.08rem;

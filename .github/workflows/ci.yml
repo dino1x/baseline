@@ -1,0 +1,88 @@
+name: Registrar Bursary Verification & Pages Release
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  verify-bursary-circuits:
+    name: Compile Compact Circuits & Run Suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository source
+        uses: actions/checkout@v4
+
+      - name: Provision Node.js 22 runtime
+        uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: 22
+
+      - name: Fetch Midnight Compact installer
+        run: |
+          curl --proto '=https' --tlsv1.2 -LsSf https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Activate Compact compiler 0.35.0
+        run: |
+          compact update 0.35.0
+          compact compile --version
+
+      - name: Synthesize full proving keys for baseline.compact
+        run: |
+          compact compile contract/src/baseline.compact /tmp/registrar-zk-out
+          ls /tmp/registrar-zk-out/keys
+
+      - name: Audit committed managed artifacts against fresh compile
+        run: |
+          compact compile --skip-zk contract/src/baseline.compact /tmp/registrar-managed-audit
+          diff -r -x '*.map' /tmp/registrar-managed-audit/contract contract/src/managed/baseline/contract
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Typecheck web dossier application
+        run: npm run typecheck
+
+      - name: Execute contract and domain test suites
+        run: npm test
+
+      - name: Run CLI registrar bursary demonstration
+        run: npm run demo
+
+      - name: Bundle interactive bursar web application
+        run: npm run build:web
+
+  publish-dossier-portal:
+    name: Publish Registrar Portal to GitHub Pages
+    needs: verify-bursary-circuits
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      pages: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out repository source
+        uses: actions/checkout@v4
+
+      - name: Provision Node.js 22 runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies and build web bundle
+        run: |
+          npm ci
+          npm run build:web
+
+      - name: Upload compiled dist artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy artifact to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
